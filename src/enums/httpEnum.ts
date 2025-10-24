@@ -3,9 +3,9 @@
  */
 export enum ResultEnum {
   SUCCESS = 200,
-  ERROR = -1,
-  TIMEOUT = 10042,
-  TYPE = 'success',
+  UNAUTHORIZED = 401,
+  BUSINESS_ERROR = 400,
+  ERROR = 500,
 }
 
 /**

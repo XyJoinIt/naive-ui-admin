@@ -18,6 +18,8 @@ LayoutMap.set('IFRAME', Iframe);
  */
 export const generateRoutes = (routerMap, parent?): any[] => {
   return routerMap.map((item) => {
+    console.log(item);
+
     const currentRoute: any = {
       // 路由地址 动态拼接生成如 /dashboard/workplace
       path: `${(parent && parent.path) ?? ''}/${item.path}`,
@@ -33,7 +35,6 @@ export const generateRoutes = (routerMap, parent?): any[] => {
         permissions: item.meta.permissions || null,
       },
     };
-
     // 为了防止出现后端返回结果不规范，处理有可能出现拼接出两个 反斜杠
     currentRoute.path = currentRoute.path.replace('//', '/');
     // 重定向

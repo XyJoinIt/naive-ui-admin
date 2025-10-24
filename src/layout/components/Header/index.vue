@@ -164,7 +164,7 @@
       const drawerSetting = ref();
 
       const state = reactive({
-        username: userStore?.info?.username ?? '',
+        username: userStore?.info?.name ?? '',
         fullscreenIcon: 'FullscreenOutlined',
         navMode,
         navTheme,
@@ -280,13 +280,6 @@
         {
           icon: 'SearchOutlined',
           tips: '搜索',
-        },
-        {
-          icon: 'GithubOutlined',
-          tips: 'github',
-          eventObject: {
-            click: () => window.open('https://github.com/jekip/naive-ui-admin'),
-          },
         },
         {
           icon: 'LockOutlined',

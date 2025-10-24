@@ -32,8 +32,10 @@ declare global {
 
   declare interface InResult<T = any> {
     code: number;
-    message: string;
-    result: T;
+    msg: string;
+    data: T;
+    scucess: boolean;
+    timestamp: number;
   }
 
   declare type Nullable<T> = T | null;

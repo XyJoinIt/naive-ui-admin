@@ -4,27 +4,16 @@ import { Alova } from '@/utils/http/alova/index';
  * @description: 获取用户信息
  */
 export function getUserInfo() {
-  return Alova.Get<InResult>('/admin_info', {
-    meta: {
-      isReturnNativeResponse: true,
-    },
-  });
+  return Alova.Get<any>('/sys/user/userInfo');
 }
 
 /**
  * @description: 用户登录
  */
 export function login(params) {
-  return Alova.Post<InResult>(
-    '/login',
-    {
-      params,
-    },
-    {
-      meta: {
-        isReturnNativeResponse: true,
-      },
-    }
+  return Alova.Post<any>(
+    '/auth/login',
+    params
   );
 }
 
@@ -39,7 +28,7 @@ export function changePassword(params, uid) {
  * @description: 用户登出
  */
 export function logout(params) {
-  return Alova.Post('/login/logout', {
+  return Alova.Post('/auth/logout', {
     params,
   });
 }

@@ -39,6 +39,7 @@ const result = {
 export default defineMock({
   // 主控台数据
   '/api/dashboard/console': () => {
+    //return resultSuccess([]);
     return resultSuccess(result);
   },
 });

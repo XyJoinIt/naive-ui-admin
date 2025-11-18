@@ -79,7 +79,6 @@ export const useUserStore = defineStore({
     // 获取用户信息
     async getInfo() {
       const data = await getUserInfoApi();
-      console.log(data);
       const permissionsList = data.permissions;
       this.setPermissions(permissionsList);
       storage.set(CURRENT_USER, data, ex); //当前用户信息

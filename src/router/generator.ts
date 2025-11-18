@@ -4,11 +4,12 @@ import { RouteRecordRaw } from 'vue-router';
 import { Layout, ParentLayout } from '@/router/constant';
 import type { AppRouteRecordRaw } from '@/router/types';
 
-const Iframe = () => import('@/views/iframe/index.vue');
+// const Iframe = () => import('@/views/iframe/index.vue');
 const LayoutMap = new Map<string, () => Promise<typeof import('*.vue')>>();
 
 LayoutMap.set('LAYOUT', Layout);
-LayoutMap.set('IFRAME', Iframe);
+LayoutMap.set('Layout', Layout);
+// LayoutMap.set('IFRAME', Iframe);
 
 /**
  * 格式化 后端 结构信息并递归生成层级路由表
@@ -17,9 +18,7 @@ LayoutMap.set('IFRAME', Iframe);
  * @returns {*}
  */
 export const generateRoutes = (routerMap, parent?): any[] => {
-  return routerMap.map((item) => {
-    console.log(item);
-
+  const mapMenu = routerMap.map((item) => {
     const currentRoute: any = {
       // 路由地址 动态拼接生成如 /dashboard/workplace
       path: `${(parent && parent.path) ?? ''}/${item.path}`,
@@ -48,6 +47,7 @@ export const generateRoutes = (routerMap, parent?): any[] => {
     }
     return currentRoute;
   });
+  return mapMenu;
 };
 
 /**

@@ -73,6 +73,7 @@ export function useDataSource(
         params = (await beforeRequest(params)) || params;
       }
       const res = await request(params);
+      console.log('res', res);
       const resultTotal = res[totalField];
       const currentPage = res[pageField];
       const total = res[itemCount];

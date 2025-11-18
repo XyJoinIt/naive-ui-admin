@@ -11,7 +11,7 @@ export function adminMenus() {
  * 获取tree菜单列表
  * @param params
  */
-export function getMenuList(params) {
-  // return Alova.Get<Menu[]>('/sys/menu/tree', { params });
-  return Alova.Get<Menu[]>('/sys/menu/list');
+export function getMenuList(params?: any) {
+  return Alova.Get<Menu[]>('/sys/menu/list', { params });
+  //return Alova.Get<Menu[]>('/sys/menu/list');
 }

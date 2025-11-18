@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div>
     <div class="n-layout-page-header">
       <n-card :bordered="false" title="角色权限管理">
@@ -216,4 +216,4 @@
   });
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped></style> -->

@@ -1,64 +1,108 @@
 <template>
-  <n-card>
-    <n-data-table :columns="columns" :data="data" :pagination="pagination" :bordered="false" />
+  <n-card class="n-layout-page-header"> 312 </n-card>
+  <n-card class="mt-4 proCard">
+    <n-data-table
+      :loading="loading"
+      :row-key="(row) => row.id"
+      :columns="columns"
+      :data="treeData"
+      :pagination="pagination"
+      :bordered="false"
+    />
   </n-card>
 </template>
 
 <script setup lang="ts">
-  import type { DataTableColumns } from 'naive-ui';
-  import { NButton, useMessage } from 'naive-ui';
-  import { h } from 'vue';
-
-  interface Song {
-    no: number;
-    title: string;
-    length: string;
-  }
-
-  function createColumns({ play }: { play: (row: Song) => void }): DataTableColumns<Song> {
+  import { NButton, NTag } from 'naive-ui';
+  import { h, onMounted, ref } from 'vue';
+  import { getMenuList } from '@/api/system/menu';
+  import { Menu } from '@/router/types';
+  const treeData = ref<Menu[]>([]);
+  const loading = ref(false);
+  const columns = createColumns();
+  const pagination = false as const;
+  function createColumns() {
     return [
       {
-        title: 'No',
-        key: 'no',
-      },
-      {
-        title: 'Title',
+        title: '标题',
         key: 'title',
       },
       {
-        title: 'Length',
-        key: 'length',
+        title: '名称',
+        key: 'name',
       },
       {
-        title: 'Action',
-        key: 'actions',
+        title: '类型',
+        key: 'menuType',
+        width: 100,
         render(row) {
-          return h(
-            NButton,
-            {
-              strong: true,
-              tertiary: true,
-              size: 'small',
-              onClick: () => play(row),
-            },
-            { default: () => 'Play' }
-          );
+          switch (row.menuType) {
+            case 10:
+              return h(NTag, { type: 'info' }, () => '目录');
+            case 20:
+              return h(NTag, { type: 'success' }, () => '菜单');
+            case 30:
+              return h(NTag, { type: 'warning' }, () => '按钮');
+            default:
+              return h(NTag, { type: 'error' }, () => '未知');
+          }
+        },
+      },
+      {
+        title: '图标',
+        key: 'ico',
+        width: 100,
+      },
+      {
+        title: '路由',
+        key: 'path',
+      },
+
+      {
+        title: '组件',
+        key: 'component',
+      },
+      {
+        title: '操作',
+        key: 'action',
+        width: 150,
+        render(row) {
+          return h('div', { style: { display: 'flex', gap: '8px' } }, [
+            h(
+              NButton,
+              {
+                type: 'primary',
+                size: 'small',
+                onClick: () => {
+                  console.log(row);
+                },
+              },
+              { default: () => '编辑' }
+            ),
+            h(
+              NButton,
+              {
+                type: 'error',
+                size: 'small',
+                onClick: () => {
+                  console.log(row);
+                },
+              },
+              { default: () => '删除' }
+            ),
+          ]);
         },
       },
     ];
   }
-
-  const data: Song[] = [
-    { no: 3, title: 'Wonderwall', length: '4:18' },
-    { no: 4, title: "Don't Look Back in Anger", length: '4:48' },
-    { no: 12, title: 'Champagne Supernova', length: '7:27' },
-  ];
-
-  const message = useMessage();
-  const columns = createColumns({
-    play(row: Song) {
-      message.info(`Play ${row.title}`);
-    },
+  const loadingData = async () => {
+    loading.value = true;
+    const treeMenuList = await getMenuList();
+    console.log(treeMenuList);
+    treeData.value = treeMenuList;
+    loading.value = false;
+  };
+  onMounted(async () => {
+    loadingData();
   });
-  const pagination = false as const;
 </script>

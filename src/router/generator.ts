@@ -3,8 +3,6 @@ import { constantRouterIcon } from './icons';
 import { RouteRecordRaw } from 'vue-router';
 import { Layout, ParentLayout } from '@/router/constant';
 import type { AppRouteRecordRaw } from '@/router/types';
-
-// const Iframe = () => import('@/views/iframe/index.vue');
 const LayoutMap = new Map<string, () => Promise<typeof import('*.vue')>>();
 
 LayoutMap.set('LAYOUT', Layout);
@@ -31,6 +29,7 @@ export const generateRoutes = (routerMap, parent?): any[] => {
         ...item.meta,
         label: item.meta.title,
         icon: constantRouterIcon[item.meta.icon] || null,
+        //icon: item.meta.icon,
         permissions: item.meta.permissions || null,
       },
     };

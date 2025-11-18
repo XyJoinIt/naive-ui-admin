@@ -51,18 +51,13 @@
       const menus = ref<any[]>([]);
       const selectedKeys = ref<string>(currentRoute.name as string);
       const headerMenuSelectKey = ref<string>('');
-
       const { navMode } = useProjectSetting();
-
       // 获取当前打开的子菜单
       const matched = currentRoute.matched;
-
       const getOpenKeys = matched && matched.length ? matched.map((item) => item.name) : [];
-
       const state = reactive({
         openKeys: getOpenKeys,
       });
-
       const inverted = computed(() => {
         return ['dark', 'header-dark'].includes(settingStore.navTheme);
       });

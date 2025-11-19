@@ -1,5 +1,4 @@
 import { useUserStore } from '@/store/modules/user';
-
 export function usePermission() {
   const userStore = useUserStore();
 
@@ -8,9 +7,12 @@ export function usePermission() {
    * @param accesses
    */
   function _somePermissions(accesses: string[]) {
-    return userStore.getPermissions.some((item) => {
-      const { value }: any = item;
-      return accesses.includes(value);
+    if (accesses.length === 0) {
+      return true;
+    }
+    const userPermissions: any = userStore.getPermissions;
+    return userPermissions.some((item) => {
+      return accesses.includes(item);
     });
   }
 

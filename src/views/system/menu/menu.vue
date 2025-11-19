@@ -7,7 +7,13 @@
     </n-flex>
   </n-card>
   <n-card class="mt-4 proCard">
+    <n-flex justify="space-between">
+      <n-button type="primary" v-if="hasPermission(['menu.add'])" @click="addMenu">
+        新增菜单
+      </n-button>
+    </n-flex>
     <n-data-table
+      class="mt-2"
       :loading="loading"
       :row-key="(row) => row.id"
       :columns="columns"
@@ -16,6 +22,7 @@
       :bordered="false"
     />
   </n-card>
+  <CreateModal ref="createModalRef" />
 </template>
 
 <script setup lang="ts">
@@ -24,10 +31,14 @@
   import { h, onMounted, ref } from 'vue';
   import { getMenuList } from '@/api/system/menu';
   import { Menu } from '@/router/types';
+  import { usePermission } from '@/hooks/web/usePermission';
+  import CreateModal from './CreateModal.vue';
   const treeData = ref<Menu[]>([]);
   const loading = ref(false);
   const columns = createColumns();
   const pagination = false as const;
+  const { hasPermission } = usePermission();
+  const createModalRef = ref();
   const formValue = ref({
     name: '',
   });
@@ -112,10 +123,13 @@
       },
     ];
   }
+
+  const addMenu = () => {
+    createModalRef.value.openModal();
+  };
   const loadingData = async () => {
     loading.value = true;
     const treeMenuList = await getMenuList();
-    console.log(treeMenuList);
     treeData.value = treeMenuList;
     loading.value = false;
   };

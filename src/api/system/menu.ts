@@ -13,5 +13,4 @@ export function adminMenus() {
  */
 export function getMenuList(params?: any) {
   return Alova.Get<Menu[]>('/sys/menu/list', { params });
-  //return Alova.Get<Menu[]>('/sys/menu/list');
 }
